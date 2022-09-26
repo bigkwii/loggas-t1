@@ -1,4 +1,3 @@
-#include "matrix.hpp"
 #include <iostream>
 
 // A Naive recursive C++ program to find minimum number
@@ -15,19 +14,17 @@ int editDist(string str1, string str2) {
     int n = str2.length();
 
     //se crea la matriz
-    MatrixI cuadricula = MatrixI(m+1, n+1, 0); //m filas y n columnas 
+    int cuadricula[m+1] [n+1]; //m filas y n columnas 
     int cost;
     
     //lleno las m filas
     for(int i = 0; i <= m; i = i + 1) {
-        cuadricula.set(i,0, i);
+        cuadricula[i][0] = i;
     }
     //lleno las n columnas
     for(int j = 0; j <= n; j = j + 1) {
-        cuadricula.set(0,j,j);
+        cuadricula[0][j] =j;
     }
-    
-    cout << "--- Matriz inicializada ---\n" << cuadricula.toString() << endl;
 
     //comienzo a llenar la tabla
     //recorro filas
@@ -41,11 +38,12 @@ int editDist(string str1, string str2) {
                 cost = 1;
             }
             //voy llenando la cuadricula en fila i, columna j.
-            cuadricula.set(i, j, min(cuadricula.get(i-1,j)+1, cuadricula.get(i-1,j-1)+cost, cuadricula.get(i,j-1)+1));
+            cuadricula[i][j] = min(cuadricula[i-1][j] +1, 
+                                   cuadricula[i-1] [j-1] + cost, 
+                                   cuadricula[i][j-1] +1);
         }
     }
-    cout << "--- despues del set --- \n" << cuadricula.toString() << endl;
-    return cuadricula.get(m,n);
+    return cuadricula[m][n];
     
 }
  
@@ -53,8 +51,8 @@ int editDist(string str1, string str2) {
 int main()
 {
     // your code goes here
-    string str1 = "hola";
-    string str2 = "holi";
+    string str1 = "banana";
+    string str2 = "ananas";
 
     cout << editDist(str1, str2);
  
