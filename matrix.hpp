@@ -84,6 +84,31 @@ class Matrix {
         return matrix[i][j];
     }
 
+    //! method to split a matrix into smaller submatrices of size x * y
+    //! the last submatrices may be smaller if the matrix cannot be split evenly
+    //! @param x number of rows in submatrices
+    //! @param y number of columns in submatrices
+    //! @return vector of submatrices
+    std::vector<Matrix<T> > split(int x, int y) {
+        std::vector<Matrix<T> > submatrices;
+        int submatrixRows = ceil((double)rows / x);
+        int submatrixCols = ceil((double)cols / y);
+        for (int i = 0; i < submatrixRows; i++) {
+            for (int j = 0; j < submatrixCols; j++) {
+                Matrix<T> submatrix(x, y, 0);
+                for (int k = 0; k < x; k++) {
+                    for (int l = 0; l < y; l++) {
+                        if (inBounds(i * x + k, j * y + l)) {
+                            submatrix.set(k, l, get(i * x + k, j * y + l));
+                        }
+                    }
+                }
+                submatrices.push_back(submatrix);
+            }
+        }
+        return submatrices;
+    }
+
 };
 
 typedef Matrix<double> MatrixD;

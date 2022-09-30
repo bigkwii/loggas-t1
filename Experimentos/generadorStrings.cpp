@@ -25,8 +25,8 @@ string * generador(int cant, int leng, string arr[]) {
 
 //ejemplo de uso.
 int main(){
-    string c_array[5];
-    string * strs =generador(5, 10,c_array );
+    string c_array[10];
+    string * strs =generador(10, 100,c_array );
 
     cout << "array = [ ";
     for (int i = 0; i < 5; ++i) {
