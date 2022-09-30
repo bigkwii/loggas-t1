@@ -3,8 +3,8 @@
 
 // Test matrix class' split method
 int main() {
-    int rows = 7;
-    int cols = 7;
+    int rows = 8;
+    int cols = 8;
     int rowsSplit = 2;
     int colsSplit = 2;
     MatrixI m(rows, cols, 0);
