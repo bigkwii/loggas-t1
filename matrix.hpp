@@ -91,8 +91,8 @@ class Matrix {
     //! @return vector of submatrices
     std::vector<Matrix<T> > split(int x, int y) {
         std::vector<Matrix<T> > submatrices;
-        int submatrixRows = ceil((double)rows / x);
-        int submatrixCols = ceil((double)cols / y);
+        int submatrixRows = floor((double)rows / x);
+        int submatrixCols = floor((double)cols / y);
         for (int i = 0; i < submatrixRows; i++) {
             for (int j = 0; j < submatrixCols; j++) {
                 Matrix<T> submatrix(x, y, 0);
@@ -105,7 +105,37 @@ class Matrix {
                 }
                 submatrices.push_back(submatrix);
             }
+            Matrix<T> lastMatrix = Matrix<T>(x, cols - (submatrixCols * y), 0);
+            for (int k = 0; k < x; k++) {
+                for (int l = 0; l < cols - (submatrixCols * y); l++) {
+                    if (inBounds(i * x + k, submatrixCols * y + l)) {
+                        lastMatrix.set(k, l, get(i * x + k, submatrixCols * y + l));
+                    }
+                }
+            }
+            submatrices.push_back(lastMatrix);
         }
+        for (int j = 0; j < submatrixCols; j++) {
+            Matrix<T> lastMatrix = Matrix<T>(rows - (submatrixRows * x), y, 0);
+            for (int k = 0; k < rows - (submatrixRows * x); k++) {
+                for (int l = 0; l < y; l++) {
+                    if (inBounds(submatrixRows * x + k, j * y + l)) {
+                        lastMatrix.set(k, l, get(submatrixRows * x + k, j * y + l));
+                    }
+                }
+            }
+            submatrices.push_back(lastMatrix);
+        }
+        Matrix<T> lastMatrix = Matrix<T>(rows - (submatrixRows * x), cols - (submatrixCols * y), 0);
+        for (int k = 0; k < rows - (submatrixRows * x); k++) {
+            for (int l = 0; l < cols - (submatrixCols * y); l++) {
+                if (inBounds(submatrixRows * x + k, submatrixCols * y + l)) {
+                    lastMatrix.set(k, l, get(submatrixRows * x + k, submatrixCols * y + l));
+                }
+            }
+        }
+        submatrices.push_back(lastMatrix);
+        
         return submatrices;
     }
 

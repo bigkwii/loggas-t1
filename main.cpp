@@ -3,10 +3,10 @@
 
 // Test matrix class' split method
 int main() {
-    int rows = 16;
-    int cols = 16;
-    int rowsSplit = 4;
-    int colsSplit = 4;
+    int rows = 7;
+    int cols = 7;
+    int rowsSplit = 2;
+    int colsSplit = 2;
     MatrixI m(rows, cols, 0);
     for(int i = 0; i < rows; i++) {
         for(int j = 0; j < cols; j++) {
