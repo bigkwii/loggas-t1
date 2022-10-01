@@ -1,3 +1,4 @@
+#include "gen.hpp"
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,9 +14,9 @@ int columna(string str1, string str2) {
     for(int i = 0; i <= n; i = i + 1) {
         col[i] = i;
     }
-    for(auto const& value : col)
-        cout << value << "; ";
-        cout << endl;
+    //for(auto const& value : col)
+    //    cout << value << "; ";
+    //    cout << endl;
     
     //para el algoritmo, los siguientes pasos:
     //1. si col[0] = col[0] +1;
@@ -45,21 +46,64 @@ int columna(string str1, string str2) {
             col[j] = min(col[j-1] +1, N+1 , NO + diag);       
         }
         //recorro la columna
-        for(auto const& value : col)
-        cout << value << "; ";
-        cout << endl;
+        //for(auto const& value : col)
+        //cout << value << "; ";
+        //cout << endl;
     }
     return col[n];
 }
 
-// Driver code
+
+
+
+// Acá se va a hacer los experimentos del algoritmo
 int main()
 {
-    // your code goes here
-    string str1 = "banana";
-    string str2 = "ananas";
+    //definimos n como la cantidad de pruebas a realizar. Se generarán 2n strings para estas.
+    int n= 2;
+    //Len corresponde al largo de los string. Se inicializa con el valor mínimo, siendo 8.
+    int len = 8;
 
-    cout << columna(str1, str2);
- 
+    //Se crea un arreglo donde se guardarán los 50 resultados al comparar los string.
+    double dur[n+1];
+
+    //Se crea un arreglo para guardar los promedios para cada uno de los largos, siendo 13 
+    //largos posibles.
+    double prom[13];
+
+    //se hace un ciclo para iterar sobre cada largo.
+    for (int j = 0; j<=12; j++){
+        //se hace un ciclo para las 50 comparaciones.
+        for (int i = 0; i <=  n; ++i) {
+            //genero string de forma aleatoria
+            string str1 = crear(len);
+            string str2 = crear(len);
+
+            //marco el tiempo justo antes de ejecutar el algoritmo.
+            auto inicio = chrono::steady_clock::now();
+            //Se ejecuta algortmo.
+            columna(str1, str2);
+            //Se marca el tiempo después de ejecutado el algoritmo.
+            auto fin = chrono::steady_clock::now();
+
+            //Se calcula la diferencia, en microsegundos, entre el final y el inicio.
+            double duracion = chrono::duration_cast<chrono::microseconds>(fin-inicio).count();
+            
+            //se guarda en el arreglo destinado para las duraciones.
+            dur[i] = duracion;
+        }
+        for(auto const& value : dur)
+        cout << value << "; ";
+        cout << endl;
+        //Se calcula el promedio de dur para el j en particular.
+        prom[j] = promedio(dur,n);
+
+        //Calculo el siguiente largo.
+        len=len*2;
+    }
+    cout << "promedios:       ";
+    for(auto const& value : prom)
+        cout << value << "; ";
+        cout << endl;
     return 0;
 }

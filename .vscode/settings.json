@@ -3,6 +3,7 @@
         "*.rmd": "markdown",
         "iostream": "cpp",
         "ostream": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "chrono": "cpp"
     }
 }
