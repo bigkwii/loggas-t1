@@ -57,6 +57,7 @@ int editDist(string str1, string str2) {
         s++;
     }
     free(mat);
+    //cout  << res << endl;
     return res;
     
 }
@@ -101,6 +102,7 @@ int main()
 
         //Calculo el siguiente largo.
         len=len*2;
+        cout << "Largo: " << len << " = 2^" << j+3 << endl;
     }
     cout << "promedios:       ";
     for(auto const& value : prom)
