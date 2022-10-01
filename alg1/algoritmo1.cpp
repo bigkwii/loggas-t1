@@ -101,8 +101,8 @@ int main()
         prom[j] = sum/n;
 
         //Calculo el siguiente largo.
+        cout << "Se terminó con str's de largo: " << len << " = 2^" << j+3 << endl;
         len=len*2;
-        cout << "Largo: " << len << " = 2^" << j+3 << endl;
     }
     cout << "promedios:       ";
     for(auto const& value : prom)
