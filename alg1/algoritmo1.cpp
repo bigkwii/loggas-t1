@@ -50,7 +50,14 @@ int editDist(string str1, string str2) {
                                    mat[i][j-1] +1);
         }
     }
-    return mat[n][n];
+    int res = mat[n][n];
+    while( s < (n+1))
+    {
+        free(mat[s]);
+        s++;
+    }
+    free(mat);
+    return res;
     
 }
  
@@ -59,7 +66,7 @@ int editDist(string str1, string str2) {
 int main()
 {
     //definimos n como la cantidad de pruebas a realizar. Se generarán 2n strings para estas.
-    int n= 3;
+    int n= 50;
     //Len corresponde al largo de los string. Se inicializa con el valor mínimo, siendo 8.
     int len = 8;
     //Se crea un arreglo para guardar los promedios para cada uno de los largos, siendo 13 
@@ -67,7 +74,7 @@ int main()
     double prom[13];
 
     //se hace un ciclo para iterar sobre cada largo.
-    for (int j = 0; j<=7; j++){
+    for (int j = 0; j<=10; j++){
         //Para guardar las sumas.
         double sum =0;
         //se hace un ciclo para las 50 comparaciones.
