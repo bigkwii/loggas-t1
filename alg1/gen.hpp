@@ -32,6 +32,9 @@ string * generador(int cant, int leng, string arr[]) {
     return arr;
 }
 
+
+
+
 //ejemplo de uso.
 //int main(){
 //    string c_array[50];

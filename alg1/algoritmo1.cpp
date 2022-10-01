@@ -11,25 +11,31 @@ int min(int x, int y, int z) {return std::min({x, y, z});}
  
 int editDist(string str1, string str2) {
     // tamaño matriz
-    int m = str1.length();
-    int n = str2.length();
-
-    //se crea la matriz
-    int cuadricula[m+1] [n+1]; //m filas y n columnas 
+    int n = str1.length();
     int cost;
+
+    //matriz con malloc
+    int **mat=NULL; // double pointer matrix
+    int s=0;
+    mat= (int **)malloc((n+1) * sizeof(int*));
+    while( s < (n+1))
+    {
+        mat[s]=(int *)malloc((n+1) * sizeof(int));
+        s++;
+    }
     
     //lleno las m filas
-    for(int i = 0; i <= m; i = i + 1) {
-        cuadricula[i][0] = i;
+    for(int i = 0; i <= n; i = i + 1) {
+        mat[i][0] = i;
     }
     //lleno las n columnas
     for(int j = 0; j <= n; j = j + 1) {
-        cuadricula[0][j] =j;
+        mat[0][j] =j;
     }
 
     //comienzo a llenar la tabla
     //recorro filas
-    for (int i = 1; i <= m; i++) {
+    for (int i = 1; i <= n; i++) {
         //recorro columnas
         for (int j = 1; j <= n; j++) {
             //si son iguales, asigno valor 0. Si son distintas, valor 1.
@@ -39,12 +45,12 @@ int editDist(string str1, string str2) {
                 cost = 1;
             }
             //voy llenando la cuadricula en fila i, columna j.
-            cuadricula[i][j] = min(cuadricula[i-1][j] +1, 
-                                   cuadricula[i-1] [j-1] + cost, 
-                                   cuadricula[i][j-1] +1);
+            mat[i][j] = min(mat[i-1][j] +1, 
+                                   mat[i-1] [j-1] + cost, 
+                                   mat[i][j-1] +1);
         }
     }
-    return cuadricula[m][n];
+    return mat[n][n];
     
 }
  
@@ -53,19 +59,17 @@ int editDist(string str1, string str2) {
 int main()
 {
     //definimos n como la cantidad de pruebas a realizar. Se generarán 2n strings para estas.
-    int n= 2;
+    int n= 3;
     //Len corresponde al largo de los string. Se inicializa con el valor mínimo, siendo 8.
     int len = 8;
-
-    //Se crea un arreglo donde se guardarán los 50 resultados al comparar los string.
-    double dur[n+1];
-
     //Se crea un arreglo para guardar los promedios para cada uno de los largos, siendo 13 
     //largos posibles.
     double prom[13];
 
     //se hace un ciclo para iterar sobre cada largo.
-    for (int j = 0; j<=12; j++){
+    for (int j = 0; j<=7; j++){
+        //Para guardar las sumas.
+        double sum =0;
         //se hace un ciclo para las 50 comparaciones.
         for (int i = 0; i <=  n; ++i) {
             //genero string de forma aleatoria
@@ -82,14 +86,11 @@ int main()
             //Se calcula la diferencia, en microsegundos, entre el final y el inicio.
             double duracion = chrono::duration_cast<chrono::microseconds>(fin-inicio).count();
             
-            //se guarda en el arreglo destinado para las duraciones.
-            dur[i] = duracion;
+            //se suma la duración a la variable sum.
+            sum = +duracion;
         }
-        for(auto const& value : dur)
-        cout << value << "; ";
-        cout << endl;
         //Se calcula el promedio de dur para el j en particular.
-        prom[j] = promedio(dur,n);
+        prom[j] = sum/n;
 
         //Calculo el siguiente largo.
         len=len*2;

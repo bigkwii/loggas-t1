@@ -60,12 +60,9 @@ int columna(string str1, string str2) {
 int main()
 {
     //definimos n como la cantidad de pruebas a realizar. Se generarán 2n strings para estas.
-    int n= 2;
+    int n= 50;
     //Len corresponde al largo de los string. Se inicializa con el valor mínimo, siendo 8.
     int len = 8;
-
-    //Se crea un arreglo donde se guardarán los 50 resultados al comparar los string.
-    double dur[n+1];
 
     //Se crea un arreglo para guardar los promedios para cada uno de los largos, siendo 13 
     //largos posibles.
@@ -73,6 +70,8 @@ int main()
 
     //se hace un ciclo para iterar sobre cada largo.
     for (int j = 0; j<=12; j++){
+        //Para guardar las sumas.
+        double sum =0;
         //se hace un ciclo para las 50 comparaciones.
         for (int i = 0; i <=  n; ++i) {
             //genero string de forma aleatoria
@@ -89,14 +88,11 @@ int main()
             //Se calcula la diferencia, en microsegundos, entre el final y el inicio.
             double duracion = chrono::duration_cast<chrono::microseconds>(fin-inicio).count();
             
-            //se guarda en el arreglo destinado para las duraciones.
-            dur[i] = duracion;
+            //se suma la duración a la variable sum.
+            sum = +duracion;
         }
-        for(auto const& value : dur)
-        cout << value << "; ";
-        cout << endl;
         //Se calcula el promedio de dur para el j en particular.
-        prom[j] = promedio(dur,n);
+        prom[j] = sum/n;
 
         //Calculo el siguiente largo.
         len=len*2;
