@@ -51,6 +51,7 @@ int editDist(string str1, string str2) {
         }
     }
     int res = mat[n][n];
+    s = 0;
     while( s < (n+1))
     {
         free(mat[s]);
@@ -75,7 +76,7 @@ int main()
     double prom[13];
 
     //se hace un ciclo para iterar sobre cada largo.
-    for (int j = 0; j<=10; j++){
+    for (int j = 0; j<=12; j++){
         //Para guardar las sumas.
         double sum =0;
         //se hace un ciclo para las 50 comparaciones.
