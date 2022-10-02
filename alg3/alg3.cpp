@@ -57,8 +57,8 @@ int editDist(string str1, string str2,int m1[], int m2[]) {
 int alg3(string str1, string str2, int x) {
     //veo si alcanzan a ser todos de tamano x o me van a quedar mas pequeños
     int n = max(str1.length(), str2.length()) ;
-    if (n%x !=0 && n>x) {
-        return 0;
+    if (n%x !=0 && n>=x) {
+        return -1;
     }
 
     //caso entre perfect.
@@ -112,54 +112,22 @@ int alg3(string str1, string str2, int x) {
             string st1 = str1.substr(sub*i,sub);
             string st2 = str2.substr(sub*i,sub);
 
-
-            //para mostrar substring.
-            //--------------------------------------
-            //cout << " s1 "<<st1<< " s2 "<<st2<< " \n";
-            //--------------------------------------
-
-            //LLENAR FRONTERAS.
-
-            //Se llena la frontera sur:
-
-            //--------------------------------------
-            //cout << "sur: \n";
-            //--------------------------------------
-
-            //cout <<filas[j+1][sub*i]<< ";";
             for (int k=1; k<=sub; k++) {
 
-                //mostrar strings comparandose.
-                //--------------------------------------
-                //cout<< " st2.substr(0,k)="<< st2.substr(0,k)<<" st1="<<st1<<" ;\n";
-                //--------------------------------------
-                
                 filas[j+1][k+sub*i] = editDist(st2.substr(0,k),st1, norte,oeste);
                 //cout <<filas[j+1][k+sub*i]<< ";";
             }
             //Completo la frontera este.
     
-            //--------------------------------------
-            //cout << "\n este \n";
-            //--------------------------------------
             for (int k=0; k<=sub; k++) {
                 if (k==0) {
                     columnas[i+1][k+sub*j] =norte[sub];
 
-                    //--------------------------------------
-                    //cout <<columnas[i+1][0]<< ";";
-                    //--------------------------------------
+
                 }
                 else {
-                    //--------------------------------------
-                    //cout<< " st1.substr(0,k)="<< st1.substr(0,k)<<" st2="<<st2<<" ;\n";
-                    //--------------------------------------
-                    
+ 
                     columnas[i+1][k+sub*j] = editDist(st2, st1.substr(0,k),norte,oeste);
-                    
-                    //--------------------------------------
-                    //cout <<columnas[i+1][k+sub*j]<< " ;";
-                    //--------------------------------------
                 }
             }
 
@@ -200,7 +168,7 @@ int main()
     double prom[13];
 
     //se hace un ciclo para iterar sobre cada largo.
-    for (int j = 0; j<=12; j++){
+    for (int j = 0; j<=5; j++){
         //Para guardar las sumas.
         double sum =0;
         //se hace un ciclo para las 50 comparaciones.
@@ -208,13 +176,17 @@ int main()
             //genero string de forma aleatoria
             string str1 = crear(len);
             string str2 = crear(len);
+            int x; // numero de subdivisiones
+            x = len/64 > 0 ? len/64 : 1; //
 
             //marco el tiempo justo antes de ejecutar el algoritmo.
             auto inicio = chrono::steady_clock::now();
             //Se ejecuta algortmo.
-            int x; // numero de subdivisiones
-            x = len/64 > 0 ? len/64 : 1; //
-            alg3(str1, str2,x);
+            
+            int a =alg3(str1, str2,x);
+            if (a==-1) {
+                return 10;
+            }
             //Se marca el tiempo después de ejecutado el algoritmo.
             auto fin = chrono::steady_clock::now();
 
