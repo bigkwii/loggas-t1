@@ -60,22 +60,16 @@ int alg3(string str1, string str2, int x) {
     if (n%x !=0 && n>=x) {
         return -1;
     }
+    int s=0;
 
     //caso entre perfect.
     //numero de elementos en cada submatriz
     int sub = n/x;
     //creo el espacio para ir guardando las fronteras
     //son x+1 filas/columnas de tamanno n+1 cada una.
-    //int filas[x+1][n+1];
+    int filas[2][n+1];
     //matriz con malloc
-    int **filas=NULL; // double pointer matrix
-    int s=0;
-    filas= (int **)malloc((n+1) * sizeof(int*));
-    while( s < (n+1))
-    {
-        filas[s]=(int *)malloc((n+1) * sizeof(int));
-        s++;
-    }
+    
 
     //int columnas[x+1][n+1];
     int **columnas=NULL;
@@ -107,7 +101,7 @@ int alg3(string str1, string str2, int x) {
     //recorre de arriba a abajo. Se completa la columna (j+1)
     for (int j=0; j<x; j++) {
         //?????????????
-        filas[j+1][0] = norte[sub];
+        filas[1][0] = norte[sub];
         //para ir de izquierda a derecha. En este ciclo se completa la fila (i+1).
         for (int i=0; i<x; i++) {
             //muestro las fronteras iniciales.
@@ -118,7 +112,7 @@ int alg3(string str1, string str2, int x) {
 
             for (int k=1; k<=sub; k++) {
 
-                filas[j+1][k+sub*i] = editDist(st2.substr(0,k),st1, norte,oeste);
+                filas[1][k+sub*i] = editDist(st2.substr(0,k),st1, norte,oeste);
                 //cout <<filas[j+1][k+sub*i]<< ";";
             }
             //Completo la frontera este.
@@ -139,10 +133,10 @@ int alg3(string str1, string str2, int x) {
             //Norte
             for (int l=0; l<=sub; l++) {
                 if(i==x-1) {
-                    norte[l] = filas[j+1][l];
+                    norte[l] = filas[1][l];
                 }
                 else {
-                    norte[l] = filas[j][l+sub*(i+1)];
+                    norte[l] = filas[0][l+sub*(i+1)];
                 }
             }
             //oeste
@@ -156,15 +150,16 @@ int alg3(string str1, string str2, int x) {
             } 
             //cout <<  "\n \n ";   
         }
+        for(int c=0; c<=n ;c++) {
+            filas[0][c]=filas[1][c];
+        }
     }
-    int res = filas[x][n];
+    int res = filas[1][n];
 
-    s = 0;
-    while( s < (n+1)) {free(filas[s]);s++;}
-    free(filas);
-    s = 0;
-    while( s < (n+1)) {free(columnas[s]);s++;}
+
+    for(int i = 0; i < n+1; i++) free(columnas[i]);
     free(columnas);
+
     return res;
 }
 
@@ -180,7 +175,7 @@ int main()
     double prom[13];
 
     //se hace un ciclo para iterar sobre cada largo.
-    for (int j = 0; j<=2; j++){
+    for (int j = 0; j<=12; j++){
         //Para guardar las sumas.
         double sum =0;
         //se hace un ciclo para las 50 comparaciones.
@@ -189,18 +184,16 @@ int main()
             string str1 = crear(len);
             string str2 = crear(len);
             int x; // numero de subdivisiones
-            x = len/64 > 0 ? len/64 : 1; //
+            x = len/32 > 0 ? len/2 : 1; //
 
             //marco el tiempo justo antes de ejecutar el algoritmo.
             auto inicio = chrono::steady_clock::now();
             //Se ejecuta algortmo.
             
-            int a =alg3(str1, str2,x);
+            alg3(str1, str2,x);
             //Se marca el tiempo después de ejecutado el algoritmo.
             auto fin = chrono::steady_clock::now();
-            if (a==-1) {
-                return 10;
-            }
+
             //Se calcula la diferencia, en microsegundos, entre el final y el inicio.
             double duracion = chrono::duration_cast<chrono::microseconds>(fin-inicio).count();
             
