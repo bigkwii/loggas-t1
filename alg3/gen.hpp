@@ -43,3 +43,9 @@ string * generador(int cant, int leng, string arr[]) {
 //    }
 //    cout << "]" << endl;
 //}
+
+string extraer(string str, int largo, int bloque) {
+    int inicio= bloque*largo;
+    int fin = inicio + largo;
+    return str.substr(inicio, fin);
+}
