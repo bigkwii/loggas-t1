@@ -94,18 +94,18 @@ int alg3(string str1, string str2, int x) {
         for (int i=0; i<x; i++) {
             //muestro las fronteras iniciales.
             //--------------------------------------
-            cout << "j="<<j<< " i="<<i;
-            cout << "norte ";
-            for(auto const& value : norte)
-                cout << value << "; ";
-                cout << endl;
+            //cout << "j="<<j<< " i="<<i;
+            //cout << "norte ";
+            //for(auto const& value : norte)
+            //    cout << value << "; ";
+            //    cout << endl;
             //--------------------------------------
 
             //--------------------------------------
-            cout << "oeste ";
-            for(auto const& value : oeste)
-                cout << value << "; ";
-                cout << endl;
+            //cout << "oeste ";
+            //for(auto const& value : oeste)
+            //    cout << value << "; ";
+            //    cout << endl;
             //--------------------------------------
 
             //recorto el string para la submatriz.
@@ -126,24 +126,22 @@ int alg3(string str1, string str2, int x) {
             //cout << "sur: \n";
             //--------------------------------------
 
-            cout <<"sur \n";
-            cout <<filas[j+1][sub*i]<< ";";
+            //cout <<filas[j+1][sub*i]<< ";";
             for (int k=1; k<=sub; k++) {
 
                 //mostrar strings comparandose.
                 //--------------------------------------
-                cout<< " st2.substr(0,k)="<< st2.substr(0,k)<<" st1="<<st1<<" ;\n";
+                //cout<< " st2.substr(0,k)="<< st2.substr(0,k)<<" st1="<<st1<<" ;\n";
                 //--------------------------------------
                 
                 filas[j+1][k+sub*i] = editDist(st2.substr(0,k),st1, norte,oeste);
-                cout <<filas[j+1][k+sub*i]<< ";";
+                //cout <<filas[j+1][k+sub*i]<< ";";
             }
             //Completo la frontera este.
     
             //--------------------------------------
             //cout << "\n este \n";
             //--------------------------------------
-            cout <<" \neste \n";
             for (int k=0; k<=sub; k++) {
                 if (k==0) {
                     columnas[i+1][k+sub*j] =norte[sub];
@@ -184,17 +182,17 @@ int alg3(string str1, string str2, int x) {
                     oeste[l] = columnas[i+1][l+j*sub];
                 }   
             } 
-            cout <<  "\n \n ";   
+            //cout <<  "\n \n ";   
         }
     }
     return filas[x][n];
 }
 
-int main() {
-        //Para guardar las sumas.
-        string str1="abcdefghijklmnopqrstuvwn";
-        string str2="abcbefghijklmnopqrstuvwo";
-
-        cout << alg3(str1,str2,4);
+// Acá se va a hacer los experimentos del algoritmo. Se muere xd
+int main()
+{
+   string s1="ananasananasananasananas";
+   string s2="bananabananabananabanana";
+   cout << alg3(s1,s2,4);
 
 }

@@ -77,5 +77,5 @@ int main()
     int c1[]={6,7,8,9,10,11,12};
     int c2[]={6,5,5,5,5,5,5};
 
-    cout << editDist(str2,str1,c1,c2);
+    cout << editDist(str1,str2,c1,c2);
 }
