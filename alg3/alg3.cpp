@@ -38,8 +38,8 @@ int editDistSub(string str1, string str2, int k, int l, int m, int ** frontera) 
     }
     for(int i = 0; i < m; i = i + 1) {
         for(int j = 0; j < m; j = j + 1) {
-            frontera[k+i][m+1] = mat[i][m+1];
-            frontera[m+1][l+j] = mat[m+1][j];
+            frontera[k+i][l*m + m] = mat[i][m+1];
+            frontera[k*m + m][l+j] = mat[m+1][j];
         }
     }
     return mat[m+1][m+1];
