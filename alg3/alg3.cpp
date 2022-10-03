@@ -83,9 +83,52 @@ int editDist(string str1, string str2, int x) {
 // Acá se va a hacer los experimentos del algoritmo. Se muere xd
 int main()
 {
-    string str1="ananasananasananasananas";
-    string str2="bananabananabananabanana";
-    cout << editDist(str1,str2,4);
+   //definimos n como la cantidad de pruebas a realizar. Se generarán 2n strings para estas.
+    int n= 50;
+    //Len corresponde al largo de los string. Se inicializa con el valor mínimo, siendo 8.
+    int len = 8;
+    //Se crea un arreglo para guardar los promedios para cada uno de los largos, siendo 13 
+    //largos posibles.
+    double prom[13];
+
+    //se hace un ciclo para iterar sobre cada largo.
+    for (int j = 0; j<=12; j++){
+        //Para guardar las sumas.
+        double sum =0;
+        //se hace un ciclo para las 50 comparaciones.
+        for (int i = 0; i <=  n; ++i) {
+            //genero string de forma aleatoria
+            string str1 = crear(len);
+            string str2 = crear(len);
+            int x; // numero de subdivisiones
+            x = len/32 > 0 ? len/4 : 1; //
+
+            //marco el tiempo justo antes de ejecutar el algoritmo.
+            auto inicio = chrono::steady_clock::now();
+            //Se ejecuta algortmo.
+            
+            editDist(str1, str2,x);
+            //Se marca el tiempo después de ejecutado el algoritmo.
+            auto fin = chrono::steady_clock::now();
+
+            //Se calcula la diferencia, en microsegundos, entre el final y el inicio.
+            double duracion = chrono::duration_cast<chrono::microseconds>(fin-inicio).count();
+            
+            //se suma la duración a la variable sum.
+            sum = +duracion;
+        }
+        //Se calcula el promedio de dur para el j en particular.
+        prom[j] = sum/n;
+
+        //Calculo el siguiente largo.
+        cout << "Se terminó con str's de largo: " << len << " = 2^" << j+3 << "tiempo: " << sum/n <<endl;
+        len=len*2;
+    }
+    cout << "promedios:       ";
+    for(auto const& value : prom)
+        cout << value << "; ";
+        cout << endl;
     return 0;
+
 }
 
