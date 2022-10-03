@@ -67,9 +67,6 @@ int editDist(string str1, string str2, int x) {
         for(int l=0; l<x; l++){
             editDistSub(str1, str2, k, l, m, frontera);
         }
-        for(int c=0; c<=n ;c++) {
-            filas[0][c]=filas[1][c];
-        }
     }
     int res = frontera[n][n];
     s = 0;
@@ -91,3 +88,4 @@ int main()
     cout << editDist(str1,str2,4);
     return 0;
 }
+
